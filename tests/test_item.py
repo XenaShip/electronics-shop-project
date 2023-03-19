@@ -22,4 +22,3 @@ def test_item_apply_discount(x):
 
 def test_item_calculate_total_price(x):
     assert x.calculate_total_price() == 1000
-
