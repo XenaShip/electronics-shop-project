@@ -22,3 +22,19 @@ def test_item_apply_discount(x):
 
 def test_item_calculate_total_price(x):
     assert x.calculate_total_price() == 1000
+
+def test_item_property(x):
+    x.name = 'IphoneXR'
+    assert x.name == 'IphoneXR'
+
+
+def test_item_instantiate_from_csv():
+    helper = len(Item.all)
+    Item.instantiate_from_csv()  # создание объектов из данных файла
+    assert (len(Item.all) - helper) == 5
+
+
+def test_item_string_to_number():
+    assert Item.string_to_number('5') == 5
+    assert Item.string_to_number('5.5') == 5
+    assert Item.string_to_number('5.0') == 5
