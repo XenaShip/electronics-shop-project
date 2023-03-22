@@ -23,6 +23,7 @@ def test_item_apply_discount(x):
 def test_item_calculate_total_price(x):
     assert x.calculate_total_price() == 1000
 
+
 def test_item_property(x):
     x.name = 'IphoneXR'
     assert x.name == 'IphoneXR'
@@ -38,3 +39,13 @@ def test_item_string_to_number():
     assert Item.string_to_number('5') == 5
     assert Item.string_to_number('5.5') == 5
     assert Item.string_to_number('5.0') == 5
+
+
+def test_item_repr():
+    my_item= Item("Смартфон", 10000, 20)
+    assert repr(my_item) == "Item('Смартфон', 10000, 20)"
+
+
+def test_item_str():
+    my_item = Item("Смартфон", 10000, 20)
+    assert str(my_item) == 'Смартфон'

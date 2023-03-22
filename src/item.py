@@ -33,6 +33,7 @@ class Item:
         Применяет установленную скидку для конкретного товара.
         """
         self.price *= Item.pay_rate
+
     @property
     def name(self):
         return self.__name
@@ -43,6 +44,7 @@ class Item:
             self.__name = name
         else:
             raise Exception ("Длина наименования товара превышает 10 символов.")
+
     @classmethod
     def instantiate_from_csv(cls):
         with open('src/items.csv', newline='') as csvfile:
@@ -55,3 +57,9 @@ class Item:
     def string_to_number(s):
         s = float(s)
         return int(s)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+
+    def __str__(self):
+        return f'{self.__name}'
