@@ -1,6 +1,6 @@
 from src.item import Item
 import pytest
-
+from src.InstantiateCSVError import InstantiateCSVError
 
 @pytest.fixture
 def x():
@@ -33,6 +33,10 @@ def test_item_instantiate_from_csv():
     helper = len(Item.all)
     Item.instantiate_from_csv()  # создание объектов из данных файла
     assert (len(Item.all) - helper) == 5
+    with pytest.raises(FileNotFoundError) as excinfo:
+        Item.instantiate_from_csv()
+    with pytest.raises(InstantiateCSVError) as excinfo:
+        Item.instantiate_from_csv()
 
 
 def test_item_string_to_number():

@@ -51,15 +51,20 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls):
         try:
-            with open('src/items.csv', newline='') as csvfile:
-                reader = csv.DictReader(csvfile)
-                for row in reader:
-                    # print(row['name'], row['price'], row['quantity'])
+            csvfile = open('src/items.csv', newline='')
+            csvfile.reader = csv.DictReader(csvfile)
+            for row in csvfile.reader:
+                # print(row['name'], row['price'], row['quantity'])
+                if (row['name'] is None) or (row['price'] is None) or (row['quantity'] is None):
+                    raise InstantiateCSVError
+                else:
                     Item(row['name'], row['price'], row['quantity'])
         except FileNotFoundError as e:
             print(f'{e}: Отсутствует файл item.csv')
         except InstantiateCSVError as e:
             print(f'{e}: Файл item.csv поврежден')
+        finally:
+            csvfile.close()
 
     @staticmethod
     def string_to_number(s):
