@@ -49,10 +49,13 @@ class Item:
             raise Exception ("Длина наименования товара превышает 10 символов.")
 
     @classmethod
-    def instantiate_from_csv(cls):
+    def instantiate_from_csv(cls, fn='src/items.csv'):
         try:
-            csvfile = open('src/items.csv', newline='')
+            csvfile = open(fn, newline='')
             csvfile.reader = csv.DictReader(csvfile)
+            fieldnames = csvfile.reader.fieldnames
+            if len(fieldnames) != 3:
+                raise InstantiateCSVError
             for row in csvfile.reader:
                 # print(row['name'], row['price'], row['quantity'])
                 if (row['name'] is None) or (row['price'] is None) or (row['quantity'] is None):
@@ -60,11 +63,9 @@ class Item:
                 else:
                     Item(row['name'], row['price'], row['quantity'])
         except FileNotFoundError as e:
-            print(f'{e}: Отсутствует файл item.csv')
+            print(f'FileNotFoundError: Отсутствует файл {fn}')
         except InstantiateCSVError as e:
-            print(f'{e}: Файл item.csv поврежден')
-        finally:
-            csvfile.close()
+            print(f'{e}: Файл {fn} поврежден')
 
     @staticmethod
     def string_to_number(s):
